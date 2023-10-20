@@ -38,8 +38,21 @@ public_users.post("/register", (req,res) => {
 
 
 // Get the book list available in the shop using async await
-public_users.get('/',async (req, res) => {
-    await res.send(JSON.stringify(books,null,4));
+public_users.get('/', (req, res) => {
+    const getBooks = () => {
+        return new Promise((resolve,reject) => {
+          setTimeout(() => {
+            resolve(books);
+            ),1000);
+        })
+    }
+    getBooks().then((books) => {
+        res.json(books);
+    }).catch((err) =>{
+      res.status(500).json({error: "An error occured"});
+    });
+      
+    //await res.send(JSON.stringify(books,null,4));
   
 });
 
